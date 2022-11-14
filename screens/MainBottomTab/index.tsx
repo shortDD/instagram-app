@@ -2,13 +2,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { View, TouchableOpacity, Text } from "react-native";
-import UploadPhoto from "../Photo/UploadPhoto";
 import Home from "./Home";
 import NavigationFactory from "../../components/NavigationFactory";
 import Notifications from "./Notifications";
 import Profile from "./Profile";
 import Search from "./Search";
 const Tab = createBottomTabNavigator();
+const fs = NavigationFactory([{ name: "HomePage", component: Home }]);
 const BottomTabNavigation = ({ navigation }: { navigation: any }) => {
   return (
     <Tab.Navigator
@@ -42,27 +42,7 @@ const BottomTabNavigation = ({ navigation }: { navigation: any }) => {
         safeAreaInsets: true,
       }}
     >
-      <Tab.Screen name="Home">
-        {(props) => (
-          <NavigationFactory
-            {...props}
-            data={[
-              {
-                name: "Home",
-                component: Home,
-                options: {
-                  headerTitleAlign: "center",
-                  headerRight: () => (
-                    <TouchableOpacity onPress={() => {}}>
-                      <Text>Messages</Text>
-                    </TouchableOpacity>
-                  ),
-                },
-              },
-            ]}
-          />
-        )}
-      </Tab.Screen>
+      <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen
         name="Add"

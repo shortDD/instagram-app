@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import { LinkToMessage } from "../../components/LinkToMessages";
+import NavigationFactory from "../../components/NavigationFactory";
 const Home = ({ navigation }: { navigation: any }) => {
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <LinkToMessage navigation={navigation} />,
+    });
+  }, [navigation]);
   return (
     <TouchableOpacity
       onPress={() => {
@@ -21,4 +28,4 @@ const Home = ({ navigation }: { navigation: any }) => {
   );
 };
 
-export default Home;
+export default NavigationFactory([{ name: "HomPage", component: Home }]);

@@ -1,19 +1,20 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 // export default Home;
-const Stack = createStackNavigator();
 type Data = {
   name: string;
   component: any;
   options?: any;
 };
-export default ({ data }: { data: Data[] }) => {
-  return (
-    <Stack.Navigator >
+function NavigationFactory(data: Data[]) {
+  const Stack = createStackNavigator();
+  return () => (
+    <Stack.Navigator>
       {data.map((item, index) => {
         if (index === 0) {
           return (
             <Stack.Screen
+              key={index}
               name={item.name}
               component={item.component}
               options={{ ...item.options }}
@@ -25,4 +26,5 @@ export default ({ data }: { data: Data[] }) => {
       })}
     </Stack.Navigator>
   );
-};
+}
+export default NavigationFactory;
