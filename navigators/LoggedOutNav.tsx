@@ -1,15 +1,15 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import AuthHome from "./AuthHome";
-import Confirm from "./Confirm";
-import Login from "./LogIn";
-import SignUp from "./SignUp";
+import AuthHome from "../screens/Auth/AuthHome";
+import Confirm from "../screens/Auth/Confirm";
+import Login from "../screens/Auth/LogIn";
+import SignUp from "../screens/Auth/SignUp";
 const Stack = createStackNavigator();
-const AuthRouter = () => {
+const LoggedOutNav = () => {
   return (
     <Stack.Navigator
       initialRouteName="AuthHome"
-      screenOptions={{ headerMode: "screen" }}
+      screenOptions={{ headerMode: "screen", headerShown: false }}
     >
       <Stack.Screen name="AuthHome" component={AuthHome} />
       <Stack.Screen name="Login" component={Login} />
@@ -18,4 +18,4 @@ const AuthRouter = () => {
     </Stack.Navigator>
   );
 };
-export default AuthRouter;
+export default LoggedOutNav;

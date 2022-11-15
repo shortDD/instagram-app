@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React from "react";
-import Message from "./Message";
-import Messages from "./Messages";
+import Message from "../screens/Messgae/Message";
+import Messages from "../screens/Messgae/Messages";
 const Tab = createMaterialTopTabNavigator();
 
 const MessageNavigation = () => {

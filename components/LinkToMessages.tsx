@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components/native";
-import { TouchableOpacity, Text } from "react-native";
 
 const Container = styled.TouchableOpacity``;
-const IText = styled.Text``;
+const Text = styled.Text`
+  margin-right: 10px;
+`;
 const LinkToMessage = ({ navigation }: { navigation: any }) => {
   return (
     <Container
@@ -11,7 +12,7 @@ const LinkToMessage = ({ navigation }: { navigation: any }) => {
         navigation.navigate("MessageNavigation");
       }}
     >
-      <IText>Messages</IText>
+      <Text>Messages</Text>
     </Container>
   );
 };

@@ -1,40 +1,25 @@
 import "react-native-gesture-handler";
 import Constants from "expo-constants";
-
+import { MyTheme, ThemeProvider } from "./styles";
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  AppRegistry,
-} from "react-native";
+import { StyleSheet, View, AppRegistry } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { AsyncStorage } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { useAssets } from "expo-asset";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { AuthProvider } from "./components/AuthProvider";
-import { NavController } from "./components/NavController";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
+import { client, isLoggedInVar } from "./apollo";
+import { NavigationContainer } from "@react-navigation/native";
+import LoggedOutNav from "./navigators/LoggedOutNav";
+import LoggedInNav from "./navigators/LoggedInNav";
 export default function App() {
-  const client = new ApolloClient({
-    uri: "localhost:4000/graphql",
-    cache: new InMemoryCache(),
-  });
-
   const [font] = Font.useFonts({ ...Ionicons.font });
   const [assets] = useAssets([require("./assets/logo.png")]);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   useEffect(() => {
     const preLoad = async () => {
       try {
         await SplashScreen.preventAutoHideAsync();
-        const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
-        if (isLoggedIn === null || isLoggedIn === "false") {
-          setIsLoggedIn(false);
-        } else {
-          setIsLoggedIn(true);
-        }
       } catch (e) {
         console.log(e);
       }
@@ -50,9 +35,11 @@ export default function App() {
   return (
     <View onLayout={onLayoutRootView} style={styles.container}>
       <ApolloProvider client={client}>
-        <AuthProvider isLoggedInInitialValue={isLoggedIn}>
-          <NavController />
-        </AuthProvider>
+        <ThemeProvider theme={MyTheme}>
+          <NavigationContainer>
+            {isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}
+          </NavigationContainer>
+        </ThemeProvider>
       </ApolloProvider>
     </View>
   );

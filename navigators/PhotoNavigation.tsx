@@ -1,9 +1,9 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import SelectPhoto from "./SelectPhoto";
-import TakePhoto from "./TakePhoto";
-import UploadPhoto from "./UploadPhoto";
+import SelectPhoto from "../screens/Photo/SelectPhoto";
+import TakePhoto from "../screens/Photo/TakePhoto";
+import UploadPhoto from "../screens/Photo/UploadPhoto";
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 

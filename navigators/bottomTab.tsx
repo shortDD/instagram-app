@@ -2,11 +2,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { View, TouchableOpacity, Text } from "react-native";
-import Home from "./Home";
-import NavigationFactory from "../../components/NavigationFactory";
-import Notifications from "./Notifications";
-import Profile from "./Profile";
-import Search from "./Search";
+import Home from "../screens/BottomTab/Home";
+import NavigationFactory from "../components/NavigationFactory";
+import Notifications from "../screens/BottomTab/Notifications";
+import Profile from "../screens/BottomTab/Profile";
+import Search from "../screens/BottomTab/Search";
 const Tab = createBottomTabNavigator();
 const fs = NavigationFactory([{ name: "HomePage", component: Home }]);
 const BottomTabNavigation = ({ navigation }: { navigation: any }) => {

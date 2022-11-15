@@ -1,11 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import BottomTabNavigation from "./MainBottomTab";
+import BottomTabNavigation from "./bottomTab";
 import MessageNavigation from "./MessageNavigation";
-import PhotoTabNavigation from "./Photo";
+import PhotoTabNavigation from "./PhotoNavigation";
 const Stack = createStackNavigator();
 
-const MainNavigation = () => {
+const LoggedInNav = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
@@ -17,4 +17,4 @@ const MainNavigation = () => {
     </Stack.Navigator>
   );
 };
-export default MainNavigation;
+export default LoggedInNav;
