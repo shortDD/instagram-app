@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import { Container } from "../BottomTab/Home";
 const SelectPhoto = ({ navigation }: { navigation: any }) => {
   return (
     <TouchableOpacity
@@ -7,16 +8,9 @@ const SelectPhoto = ({ navigation }: { navigation: any }) => {
         navigation.navigate("UploadPhoto");
       }}
     >
-      <View
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-        }}
-      >
+      <Container>
         <Text>SelectPhoto</Text>
-      </View>
+      </Container>
     </TouchableOpacity>
   );
 };

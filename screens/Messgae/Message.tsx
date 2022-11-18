@@ -1,17 +1,11 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { Container } from "../BottomTab/Home";
 const Message = () => {
   return (
-    <View
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-      }}
-    >
+    <Container>
       <Text>Message</Text>
-    </View>
+    </Container>
   );
 };
 

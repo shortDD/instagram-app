@@ -1,6 +1,6 @@
 import React from "react";
-import AuthButton from "../../components/AuthButton";
-import Logo from "../../components/Logo";
+import AuthLayout from "../../components/auth/AuthLayout";
+import { Button } from "react-native";
 import styled from "../../styles";
 export const View = styled.View`
   flex: 1;
@@ -13,15 +13,16 @@ const LoginLink = styled.View`
   margin-top: 25px;
 `;
 const LoginLinkText = styled.Text`
+  width: 100%;
+  text-align: center;
   color: ${(props) => props.theme.blueColor};
   font-size: 16px;
 `;
 const AuthHome = ({ navigation }: { navigation: any }) => {
   return (
-    <View>
-      <Logo />
-      <AuthButton
-        text="create account"
+    <AuthLayout>
+      <Button
+        title="create account"
         onPress={() => {
           navigation.navigate("SignUp");
         }}
@@ -35,7 +36,7 @@ const AuthHome = ({ navigation }: { navigation: any }) => {
           <LoginLinkText>Log in</LoginLinkText>
         </LoginLink>
       </Touchable>
-    </View>
+    </AuthLayout>
   );
 };
 export default AuthHome;

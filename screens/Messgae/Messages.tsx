@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { Container } from "../BottomTab/Home";
 const Messages = () => {
   return (
-    <View
+    <Container
       style={{
         display: "flex",
         alignItems: "center",
@@ -11,7 +12,7 @@ const Messages = () => {
       }}
     >
       <Text>Messages</Text>
-    </View>
+    </Container>
   );
 };
 

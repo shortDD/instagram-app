@@ -1,67 +1,80 @@
-import styled, { css } from "../../styles";
-import React, { useState } from "react";
-import { View } from "./AuthHome";
-import AuthButton from "../../components/AuthButton";
-import AuthInput from "../../components/AuthInput";
-import { Alert } from "react-native";
+import styled from "../../styles";
+import React from "react";
+import { Button } from "react-native";
+import AuthInput from "../../components/auth/AuthInput";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../apollo-hooks/apollo-mutation";
-import {
-  RequestCode,
-  RequestCodeVariables,
-} from "../../__generated__/RequestCode";
+
+import AuthLayout from "../../components/auth/AuthLayout";
 export const Form = styled.View`
   margin-top: 20px;
 `;
+import { useForm, Controller } from "react-hook-form";
+import { Login, LoginVariables } from "../../__generated__/Login";
+import ErrorMessage from "../../components/ErrorMessage";
+import { logUserIn } from "../../apollo";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [requestCode, { loading }] = useMutation<
-    RequestCode,
-    RequestCodeVariables
-  >(LOGIN, {
+const LoginPage = () => {
+  const {
+    control,
+    handleSubmit,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: {
+      userName: "",
+      password: "",
+    },
+    mode: "onChange",
+  });
+  const [login, { loading, data }] = useMutation<Login, LoginVariables>(LOGIN, {
     onCompleted: (data) => {
-      console.log(data);
+      const {
+        login: { ok, token },
+      } = data;
+      if (ok && token) {
+        logUserIn(token);
+      }
     },
   });
-  const LoginEvent = async () => {
+  const LoginEvent = () => {
     if (loading) return;
-    const emailRegex =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email === "") {
-      return Alert.alert("账号或密码为空!");
-    } else if (!emailRegex.test(email)) {
-      return Alert.alert("邮箱地址不规范!");
-    }
-    console.log(email);
-    requestCode({
+    const { userName, password } = getValues();
+    login({
       variables: {
-        email,
+        userName,
+        password,
       },
-    }).catch((data) => {
-      console.log(data);
     });
   };
   return (
-    <View>
-      <Form>
-        <AuthInput
-          placeholder="Email"
-          onChangeText={(text) => {
-            setEmail(text);
-          }}
-        />
-        {/* <AuthInput
-          placeholder="Password"
-          onChangeText={(text) => {
-            setPassword(text);
-          }}
-        /> */}
-        <AuthButton onPress={LoginEvent} text="登入" />
-      </Form>
-    </View>
+    <AuthLayout showLogo={false}>
+      <AuthInput
+        placeholder="用户名"
+        name="userName"
+        control={control}
+        rules={{ required: "用户名是必须的" }}
+      />
+      {errors.userName?.message && (
+        <ErrorMessage message={errors.userName.message} />
+      )}
+      <AuthInput
+        placeholder="密码"
+        name="password"
+        control={control}
+        rules={{ required: "密码是必须的" }}
+        secureTextEntry={true}
+      />
+      {errors.password?.message && (
+        <ErrorMessage message={errors.password.message} />
+      )}
+      <Button
+        onPress={handleSubmit(LoginEvent)}
+        title="登入"
+        disabled={!isValid}
+      />
+      {data?.login.error && <ErrorMessage message={data.login.error} />}
+    </AuthLayout>
   );
 };
-export default Login;
+export default LoginPage;

@@ -1,17 +1,14 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
+import { logUserOut } from "../../apollo";
+import { Container } from "./Home";
 const Profile = () => {
   return (
-    <View
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-      }}
-    >
+    <Container>
       <Text>Profile</Text>
-    </View>
+
+      <Button title="退出" onPress={logUserOut} />
+    </Container>
   );
 };
 

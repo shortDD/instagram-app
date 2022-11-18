@@ -1,8 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
+import NavigationFactory from "../../navigators/NavigationFactory";
+import { Container } from "./Home";
 const Notifications = ({ navigation }: { navigation: any }) => {
   return (
-    <View
+    <Container
       style={{
         display: "flex",
         alignItems: "center",
@@ -11,8 +13,10 @@ const Notifications = ({ navigation }: { navigation: any }) => {
       }}
     >
       <Text>Notifications</Text>
-    </View>
+    </Container>
   );
 };
 
-export default Notifications;
+export default NavigationFactory([
+  { name: "Notificate", component: Notifications },
+]);

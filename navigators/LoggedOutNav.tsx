@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import AuthHome from "../screens/Auth/AuthHome";
 import Confirm from "../screens/Auth/Confirm";
-import Login from "../screens/Auth/LogIn";
+import LoginPage from "../screens/Auth/LogIn";
 import SignUp from "../screens/Auth/SignUp";
 const Stack = createStackNavigator();
 const LoggedOutNav = () => {
@@ -12,7 +12,7 @@ const LoggedOutNav = () => {
       screenOptions={{ headerMode: "screen", headerShown: false }}
     >
       <Stack.Screen name="AuthHome" component={AuthHome} />
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Login" component={LoginPage} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="Confirm" component={Confirm} />
     </Stack.Navigator>

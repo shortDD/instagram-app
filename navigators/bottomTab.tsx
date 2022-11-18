@@ -1,33 +1,38 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View } from "react-native";
 import Home from "../screens/BottomTab/Home";
-import NavigationFactory from "../components/NavigationFactory";
 import Notifications from "../screens/BottomTab/Notifications";
 import Profile from "../screens/BottomTab/Profile";
 import Search from "../screens/BottomTab/Search";
+import { MyTheme } from "../styles";
 const Tab = createBottomTabNavigator();
-const fs = NavigationFactory([{ name: "HomePage", component: Home }]);
 const BottomTabNavigation = ({ navigation }: { navigation: any }) => {
   return (
     <Tab.Navigator
       backBehavior="history"
       screenOptions={({ route }) => ({
+        tabBarStyle: {
+          backgroundColor: MyTheme.lightGray,
+          paddingBottom: 5,
+          paddingTop: 5,
+        },
+        headerShown: false,
+        tabBarActiveTintColor: "#000000",
+        tabBarInactiveTintColor: "#73777B",
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name === "Home") {
-            iconName = focused
-              ? "information-circle"
-              : "information-circle-outline";
+            iconName = "home";
           } else if (route.name === "Profile") {
             iconName = "list";
           } else if (route.name === "Add") {
-            iconName = "logo-ionic";
+            iconName = "add";
           } else if (route.name === "Search") {
             iconName = "search";
           } else if (route.name === "Notifications") {
-            iconName = "notifications-circle-outline";
+            iconName = "heart";
           }
 
           // You can return any component that you like here!
@@ -36,11 +41,6 @@ const BottomTabNavigation = ({ navigation }: { navigation: any }) => {
           );
         },
       })}
-      tabBarOptions={{
-        activeTintColor: "tomato",
-        inactiveTintColor: "gray",
-        safeAreaInsets: true,
-      }}
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Search" component={Search} />

@@ -1,20 +1,69 @@
 import React from "react";
-import AuthButton from "../../components/AuthButton";
-import AuthInput from "../../components/AuthInput";
-import Logo from "../../components/Logo";
-import { View } from "./AuthHome";
-import { Form } from "./LogIn";
-const SignUp = () => {
+import AuthInput from "../../components/auth/AuthInput";
+import AuthLayout from "../../components/auth/AuthLayout";
+import { Button } from "react-native";
+import { useMutation } from "@apollo/client";
+import { CREATE_ACCOUNT } from "../../apollo-hooks/apollo-mutation";
+import { useForm } from "react-hook-form";
+import {
+  CreateAccount,
+  CreateAccountVariables,
+} from "../../__generated__/CreateAccount";
+
+const SignUp = ({ navigation }: { navigation: any }) => {
+  const {
+    control,
+    getValues,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: {
+      firstName: "",
+      userName: "",
+      email: "",
+      password: "",
+    },
+  });
+  const [createAccount, { loading }] = useMutation<
+    CreateAccount,
+    CreateAccountVariables
+  >(CREATE_ACCOUNT, {
+    onCompleted: (data) => {
+      const {
+        createAccount: { ok },
+      } = data;
+      if (ok) {
+        navigation.navigate("Login");
+      }
+    },
+  });
+
+  const createAccountEvent = () => {
+    if (loading) return;
+    const values = getValues();
+    createAccount({
+      variables: {
+        ...values,
+      },
+    });
+  };
   return (
-    <View>
-      <Logo />
-      <Form>
-        <AuthInput placeholder="用户名" />
-        <AuthInput placeholder="邮箱" />
-        <AuthInput placeholder="密码" />
-        <AuthButton text="注册" onPress={() => {}} />
-      </Form>
-    </View>
+    <AuthLayout showLogo={false} showLine={true}>
+      <AuthInput
+        control={control}
+        placeholder="姓"
+        name="firstName"
+        rules={{ required: "true" }}
+      />
+      <AuthInput control={control} placeholder="用户名" name="userName" />
+      <AuthInput control={control} placeholder="邮箱" name="email" />
+      <AuthInput control={control} placeholder="密码" name="password" />
+      <Button
+        title="注册"
+        onPress={handleSubmit(createAccountEvent)}
+        disabled={!isValid}
+      />
+    </AuthLayout>
   );
 };
 export default SignUp;

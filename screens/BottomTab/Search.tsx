@@ -1,18 +1,13 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
+import NavigationFactory from "../../navigators/NavigationFactory";
+import { Container } from "./Home";
 const Search = ({ navigation }: { navigation: any }) => {
   return (
-    <View
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-      }}
-    >
+    <Container>
       <Text>Search</Text>
-    </View>
+    </Container>
   );
 };
 
-export default Search;
+export default NavigationFactory([{ name: "SearchPage", component: Search }]);

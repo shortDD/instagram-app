@@ -1,5 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import Constants from "expo-constants";
 import React from "react";
+import { MyTheme } from "../styles";
 // export default Home;
 type Data = {
   name: string;
@@ -17,7 +19,16 @@ function NavigationFactory(data: Data[]) {
               key={index}
               name={item.name}
               component={item.component}
-              options={{ ...item.options }}
+              options={{
+                ...item.options,
+                headerTitleAlign: "center",
+                headerStyle: {
+                  borderBottomColor: "#EAEAEA",
+                  borderBottomWidth: 1,
+                  backgroundColor: MyTheme.lightGray,
+                  height: Constants.statusBarHeight + 45,
+                },
+              }}
             />
           );
         } else {
