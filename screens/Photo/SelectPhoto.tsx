@@ -3,15 +3,15 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Container } from "../BottomTab/Home";
 const SelectPhoto = ({ navigation }: { navigation: any }) => {
   return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("UploadPhoto");
-      }}
-    >
-      <Container>
+    <Container>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("UploadPhoto");
+        }}
+      >
         <Text>SelectPhoto</Text>
-      </Container>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Container>
   );
 };
 

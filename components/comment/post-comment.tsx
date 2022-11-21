@@ -1,17 +1,19 @@
 import React from "react";
 import styled, { MyTheme } from "../../styles";
 import { useForm, Controller } from "react-hook-form";
-import AuthInput from "../auth/AuthInput";
 import { Button, TextInput, View, Text } from "react-native";
+import { useMutation } from "@apollo/client";
+import { CREATE_COMMENT } from "../../apollo-hooks/apollo-mutation";
+import {
+  CreateComment,
+  CreateCommentVariables,
+} from "../../__generated__/CreateComment";
 const Container = styled.View`
   border-width: 1px;
   border-color: ${(props) => props.theme.borderGray};
   height: 60px;
-  width: 100%;
-  padding-left: 15;
-  padding-right: 15;
-  position: absolute;
-  bottom: 0;
+  padding-left: 15px;
+  padding-right: 15px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -21,11 +23,38 @@ interface IProps {
   photoId: number;
 }
 const PostComment: React.FC<IProps> = ({ playload, photoId }) => {
-  const { control } = useForm({
+  const { control, handleSubmit, getValues, reset } = useForm({
     defaultValues: {
       playload: "",
     },
   });
+  const [createComment, { loading }] = useMutation<
+    CreateComment,
+    CreateCommentVariables
+  >(CREATE_COMMENT, {
+    update: (cache, { data }) => {
+      if (data?.createComment.ok) {
+        reset();
+        cache.modify({
+          id: `Photo:${photoId}`,
+          fields: {
+            comments: (pre) => [...pre, data.createComment.comment],
+            commentsNumber: (pre) => pre + 1,
+          },
+        });
+      }
+    },
+  });
+  const post = () => {
+    const { playload } = getValues();
+    if (loading || !playload) return;
+    createComment({
+      variables: {
+        photoId,
+        playload,
+      },
+    });
+  };
   return (
     <Container>
       <View style={{ flex: 1, marginRight: 10 }}>
@@ -48,7 +77,7 @@ const PostComment: React.FC<IProps> = ({ playload, photoId }) => {
           name="playload"
         />
       </View>
-      <Button title=" Post " />
+      <Button title=" Post " onPress={handleSubmit(post)} />
     </Container>
   );
 };

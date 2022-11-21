@@ -4,32 +4,32 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: SeeFeed
+// GraphQL fragment: PhotoParts
 // ====================================================
 
-export interface SeeFeed_seeFeed_user {
+export interface PhotoParts_user {
   __typename: "User";
   id: number;
   userName: string;
   avatar: string | null;
 }
 
-export interface SeeFeed_seeFeed_comments_user {
+export interface PhotoParts_comments_user {
   __typename: "User";
   id: number;
   userName: string;
   avatar: string | null;
 }
 
-export interface SeeFeed_seeFeed_comments {
+export interface PhotoParts_comments {
   __typename: "Comment";
   isMine: boolean;
   playload: string;
   id: number;
-  user: SeeFeed_seeFeed_comments_user;
+  user: PhotoParts_comments_user;
 }
 
-export interface SeeFeed_seeFeed {
+export interface PhotoParts {
   __typename: "Photo";
   files: (string | null)[] | null;
   createAt: string;
@@ -38,11 +38,7 @@ export interface SeeFeed_seeFeed {
   isMine: boolean;
   likes: number;
   caption: string;
-  user: SeeFeed_seeFeed_user;
+  user: PhotoParts_user;
   commentsNumber: number;
-  comments: (SeeFeed_seeFeed_comments | null)[] | null;
-}
-
-export interface SeeFeed {
-  seeFeed: (SeeFeed_seeFeed | null)[] | null;
+  comments: (PhotoParts_comments | null)[] | null;
 }

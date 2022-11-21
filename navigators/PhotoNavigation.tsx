@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 const PhotoTabNavigation = () => {
   return (
-    <Tab.Navigator tabBarPosition="bottom" >
+    <Tab.Navigator tabBarPosition="bottom" backBehavior="history">
       <Tab.Screen name="SelectPhoto" component={SelectPhoto} />
       <Tab.Screen name="TakePhoto" component={TakePhoto} />
     </Tab.Navigator>
@@ -18,17 +18,9 @@ const PhotoTabNavigation = () => {
 
 export default ({ navigation }: { navigation: any }) => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="PhotoTab"
-        component={PhotoTabNavigation}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="UploadPhoto"
-        component={UploadPhoto}
-        options={{ headerTitle: "Back" }}
-      />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="PhotoTab" component={PhotoTabNavigation} />
+      <Stack.Screen name="UploadPhoto" component={UploadPhoto} />
     </Stack.Navigator>
   );
 };

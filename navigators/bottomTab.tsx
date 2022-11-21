@@ -2,11 +2,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { View } from "react-native";
+import { iconsize } from "../constanst";
 import Home from "../screens/BottomTab/Home";
 import Notifications from "../screens/BottomTab/Notifications";
-import Profile from "../screens/BottomTab/Profile";
 import Search from "../screens/BottomTab/Search";
 import { MyTheme } from "../styles";
+import Mine from "../screens/BottomTab/Mine";
 const Tab = createBottomTabNavigator();
 const BottomTabNavigation = ({ navigation }: { navigation: any }) => {
   return (
@@ -15,8 +16,7 @@ const BottomTabNavigation = ({ navigation }: { navigation: any }) => {
       screenOptions={({ route }) => ({
         tabBarStyle: {
           backgroundColor: MyTheme.lightGray,
-          paddingBottom: 5,
-          paddingTop: 5,
+          height: 55,
         },
         headerShown: false,
         tabBarActiveTintColor: "#000000",
@@ -25,28 +25,40 @@ const BottomTabNavigation = ({ navigation }: { navigation: any }) => {
           let iconName;
           if (route.name === "Home") {
             iconName = "home";
-          } else if (route.name === "Profile") {
-            iconName = "list";
+          } else if (route.name === "Mine") {
+            iconName = "person";
           } else if (route.name === "Add") {
             iconName = "add";
           } else if (route.name === "Search") {
             iconName = "search";
           } else if (route.name === "Notifications") {
-            iconName = "heart";
+            iconName = "notifications-circle";
           }
-
           // You can return any component that you like here!
           return (
-            <Ionicons name={iconName as undefined} size={size} color={color} />
+            <Ionicons
+              name={iconName as undefined}
+              size={iconsize.md}
+              color={color}
+            />
           );
         },
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{ tabBarLabel: "主页" }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{ tabBarLabel: "搜索" }}
+      />
       <Tab.Screen
         name="Add"
         component={View}
+        options={{ tabBarLabel: "" }}
         listeners={{
           tabPress: (e) => {
             e.preventDefault();
@@ -54,8 +66,16 @@ const BottomTabNavigation = ({ navigation }: { navigation: any }) => {
           },
         }}
       />
-      <Tab.Screen name="Notifications" component={Notifications} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen
+        name="Notifications"
+        component={Notifications}
+        options={{ tabBarLabel: "通知" }}
+      />
+      <Tab.Screen
+        name="Mine"
+        component={Mine}
+        options={{ tabBarLabel: "个人中心" }}
+      />
     </Tab.Navigator>
   );
 };

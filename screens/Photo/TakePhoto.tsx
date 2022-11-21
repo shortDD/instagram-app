@@ -3,9 +3,9 @@ import { View, Text } from "react-native";
 import { Container } from "../BottomTab/Home";
 const TakePhoto = () => {
   return (
-    <View>
+    <Container>
       <Text>TakePhoto</Text>
-    </View>
+    </Container>
   );
 };
 
